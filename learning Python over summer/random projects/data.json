@@ -1,0 +1,45 @@
+    {
+        "coord": {
+            "lon": -119.7029,
+            "lat": 36.8252
+        },
+        "weather": [
+            {
+                "id": 721,
+                "main": "Haze",
+                "description": "haze",
+                "icon": "50d"
+            }
+        ],
+        "base": "stations",
+        "main": {
+            "temp": 300.66,
+            "feels_like": 300.65,
+            "temp_min": 299.19,
+            "temp_max": 302.05,
+            "pressure": 1017,
+            "humidity": 44,
+            "sea_level": 1017,
+            "grnd_level": 1003
+        },
+        "visibility": 9656,
+        "wind": {
+            "speed": 2.57,
+            "deg": 290
+        },
+        "clouds": {
+            "all": 0
+        },
+        "dt": 1753808060,
+        "sys": {
+            "type": 2,
+            "id": 2001714,
+            "country": "US",
+            "sunrise": 1753794129,
+            "sunset": 1753844891
+        },
+        "timezone": -25200,
+        "id": 5338122,
+        "name": "Clovis",
+        "cod": 200
+    }
