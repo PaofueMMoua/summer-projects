@@ -1,8 +1,8 @@
 # Units 
 # time
-# error messages human redable
+# error messages human readable
 # 
-# different file make it a experience that would be like what would you like and if they say anything but weather then itll return other things and if it does return weather then talk and ask about things.
+# different file make it a experience that would be like what would you like and if they say anything but weather then it'll return other things and if it does return weather then talk and ask about things.
 
 
 import requests
