@@ -9,6 +9,7 @@ import requests
 import json
 import configparser
 from datetime import datetime
+from api import api
 
 class Weather:
 
@@ -100,10 +101,7 @@ class Weather:
                 print(f'Sunset       : {datetime.fromtimestamp(sunset).strftime("%I:%M:%S:%p")}')
                 print(f'Current Time : {datetime.fromtimestamp(currtime).strftime("%I:%M:%S:%p")}\n')
 # Running 
-        def run(self):
-# api key IMPORTANT DO NOT SHARE.
-
-                api = "b097d68cae69aff3f77b5f62165a3566"
+        def run(self, api):
 # getting the city and the unit from the file
 
                 city = (self.config[self.sectionTitle]['City'])
