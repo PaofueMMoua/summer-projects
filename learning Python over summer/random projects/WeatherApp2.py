@@ -48,10 +48,7 @@ class Weather:
 # Printing out the time and information
         def _printing_result(self, name, country, temp, feelsLike, maxTemp, minTemp, windSpd, weatherDisc, sunrise, sunset, currtime):
 
-                print()
-                print()
-                print()
-                print(f'In {name} {country}\n')
+                print(f'\n\n\nIn {name} {country}\n')
 # printing the proper information if it is included
 
                 # Checking the configuration settings to determine which
@@ -73,7 +70,7 @@ class Weather:
                 # - Highest temperature: `maxTemp` (rounded to 2 decimal places)
                 # - Lowest temperature: `minTemp` (rounded to 2 decimal places)
                 degUnit = 'Celsius'
-                if (self.config[self.sectionTitle]['Unit']) == "imperial" or (self.config[self.sectionTitle]['Unit']) == "Imperial":
+                if self.config[self.sectionTitle]['Unit'].lower() == "imperial" or (self.config[self.sectionTitle]['Unit']).lower() == "Imperial":
                         degUnit = 'Fahrenheit'
                 print(f'Current Temperature In {name}')
                 print(f'Temp    :   {round(temp, 2)} deg {degUnit}')
@@ -86,7 +83,7 @@ class Weather:
                 # Checking the unit specified in the configuration file to
                 # determine whether to display the wind speed in miles per hour (mph) or meters per
                 # second (m/s).
-                if (self.config[self.sectionTitle]['Unit']) == "imperial" or (self.config[self.sectionTitle]['Unit']) == "Imperial":
+                if (self.config[self.sectionTitle]['Unit']).lower() == "imperial" or (self.config[self.sectionTitle]['Unit']).lower() == "Imperial":
                         print(f"Wind : {round(windSpd, 2)} MPH")
                 else:
                         print(f"Wind : {round(windSpd, 2)} M/S")
@@ -107,7 +104,7 @@ class Weather:
                 unit = (self.config[self.sectionTitle]['Unit'])
 # checking for errors within the code
 
-                if unit.lower() != 'imperial' and unit.lower() != 'metric':
+                if unit.lower() not in ['imperial','metric']:
                         raise ValueError("\n\nUnit is wrong. Needs to be Imperial or Metric\n")
                 try:
                         return self._info(f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api}&units={unit}")
