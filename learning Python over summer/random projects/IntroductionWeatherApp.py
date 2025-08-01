@@ -8,7 +8,7 @@ from api import api
 configName = 'weatherConfig.ini'
 secTitle = 'CityInfo'
 
-UserName_input = str(input("\Hello I'm Wether. What should I call you\n")).capitalize()
+UserName_input = str(input("\nHello, What should I call you\n")).capitalize()
 Yes_Or_No = '(Y / N)'
 
 config = configparser.ConfigParser()
@@ -94,7 +94,7 @@ def get_User_Input(UserName_input):
     other functions like `get_city()`, `get_unit()`, and `config_Weather_Settings_()` based
     """
 # First interactions along with name get_ and question asking.
-    user_Query_Input = str(input(f'\nSo {UserName_input}, What weather details are you curious about today? Temperature, wind, or perhaps the time?\n\n')).lower()
+    user_Query_Input = str(input(f'\nSo {UserName_input}, What weather details are you curious about today? I recommend the temperature\n\n')).lower()
     # get_ the interaction and if the user is asking about the weather
     if 'weather' in user_Query_Input:
         city = get_city()
