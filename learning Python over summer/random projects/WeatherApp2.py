@@ -112,7 +112,7 @@ class Weather:
                 try:
                         return self._info(f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api}&units={unit}")
                 except NameError:
-                        raise NameError("City Name is misspelled or missing.")
+                        raise NameError("An unexpected error has occurred: City Name is misspelled or missing.")
 # Getting the city name from the config file
 
 # weather_resp = Weather(config, sectionTitle)
