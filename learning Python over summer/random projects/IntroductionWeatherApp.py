@@ -3,6 +3,7 @@ import re
 import os
 import configparser
 import requests
+from api import api
 
 configName = 'weatherConfig.ini'
 secTitle = 'CityInfo'
@@ -50,7 +51,7 @@ def get_city():
 
             except ValueError as e:
                 print(e)
-                os.exit
+                os._exit()
         if city.replace(' ', '') != '':
 
             if re.match(r"^[a-zA-Z\s]+$", city):  # Allows letters and spaces
@@ -98,15 +99,13 @@ def get_User_Input(UserName_input):
     if 'weather' in user_Query_Input:
         city = get_city()
         unit = get_unit()
-        thirdInteraction = input("\nWhat about the weather would you like to know about? (e.g., temp, wind, time, sun)\n\n").lower()
-        config_Weather_Settings_(city, unit, config, thirdInteraction)
+        weather_info_request = input("\nWhat about the weather would you like to know about? (e.g., temp, wind, time, sun)\n\n").lower()
+        config_Weather_Settings_(city, unit, config, weather_info_request)
 
     # handling a specific scenario where the user's input contains the words 'time' or 'clock'. In this case, the program assumes that the user is interested in knowing the time-related information for a specific city.
     elif 'time' in user_Query_Input or 'clock' in user_Query_Input:
         city = get_city()
-        unit = 'metric'
-        thirdInteraction = 'time'
-        config_Weather_Settings_(city, unit, config, 'time')
+        config_Weather_Settings_(city, 'metric', config, 'time')
 
     # This part of the code is handling a specific scenario where the user's input contains the word 'temp'. When this condition is met
     elif 'temp' in user_Query_Input:
@@ -125,7 +124,7 @@ def get_User_Input(UserName_input):
         if choice.lower == 'y':
             get_User_Input(UserName_input)
 
-def config_Weather_Settings_(city, unit, config, thirdInteraction):
+def config_Weather_Settings_(city, unit, config, weather_info_request):
     """
     The function `config_Weather_Settings_` sets up weather settings based on user input and interacts
     with a weather service to retrieve and display weather information.
@@ -139,20 +138,23 @@ def config_Weather_Settings_(city, unit, config, thirdInteraction):
     :param config: The `config_Weather_Settings_` function seems to be responsible for configuring
     weather settings based on user input. The `config` parameter likely refers to a configuration object
     or dictionary that stores settings related to the weather application
-    :param thirdInteraction: The `thirdInteraction` parameter in the `config_Weather_Settings_` function
+    :param weather_info_request: The `weather_info_request` parameter in the `config_Weather_Settings_` function
     is used to determine what specific weather information the user is interested in. Based on the
-    user's input stored in `thirdInteraction`, the function sets flags in the configuration to indicate
+    user's input stored in `weather_info_request`, the function sets flags in the configuration to indicate
     whether the user is interested in temperature, wind
     """
 # setting up the interactions
-
+    
+    if city == '' or unit == '':
+        ValueError("Your city or unit is blank try again")
+        os._exit()
     config[secTitle]['City'] = city
     config[secTitle]['Unit'] = unit
 
-    # checking the user's input stored in the variable `thirdInteraction` to determine what specific weather information the user is interested in.
-    config[secTitle]['tempcheck'] = 'True' if 'temp' in thirdInteraction else 'False'
-    config[secTitle]['windcheck'] = 'True' if 'weather' in thirdInteraction or 'wind' in thirdInteraction else 'False'
-    config[secTitle]['timecheck'] = 'True' if 'time' in thirdInteraction or 'sun' in thirdInteraction else 'False'
+    # checking the user's input stored in the variable `weather_info_request` to determine what specific weather information the user is interested in.
+    config[secTitle]['tempcheck'] = 'True' if 'temp' in weather_info_request else 'False'
+    config[secTitle]['windcheck'] = 'True' if 'weather' in weather_info_request or 'wind' in weather_info_request else 'False'
+    config[secTitle]['timecheck'] = 'True' if 'time' in weather_info_request or 'sun' in weather_info_request else 'False'
 
     try:
         with open(configName, 'w') as configfile:
@@ -163,13 +165,22 @@ def config_Weather_Settings_(city, unit, config, thirdInteraction):
 
     try:
         temp = WeatherApp2.Weather(config, secTitle)
-        print(temp.run())
-
+        print(temp.run(api))
+        final_question = str(input(f'Do you want to know more about another city? \n{Yes_Or_No}')).lower()
+        if final_question == 'y':
+            get_User_Input(UserName_input)
+        else:
+            print('exit')
+            os._exit()
     except ConnectionError:
-        print(f"\n\nUnable to connect to the weather service. Please check your internet connection.")
+        ConnectionError(f"\n\nUnable to connect to the weather service. Please check your internet connection.")
     except ValueError as ve:
-        print(f"\n\nError: {ve}")
+        ValueError(f"\n\nError: {ve}")
     except requests.exceptions.HTTPError as e:
-        print(f"\nError fetching weather data: {e}. Please check the city name or your internet connection.")
+        ConnectionError(f"\nError fetching weather data: {e}. Please check the city name or your internet connection.")
+    except Exception as e:
+        print(f'An unexpected error has occurred{e}')
+    else:
+        print('completed')
 
 get_User_Input(UserName_input)

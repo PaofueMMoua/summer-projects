@@ -9,7 +9,6 @@ import requests
 import json
 import configparser
 from datetime import datetime
-from api import api
 
 class Weather:
 
